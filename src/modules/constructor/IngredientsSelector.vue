@@ -4,30 +4,30 @@
 
     <ul class="ingredients__list">
       <li
-        v-for="ingredientType in items"
-        :key="ingredientType.id"
-        class="ingredients__item"
+          v-for="ingredientType in items"
+          :key="ingredientType.id"
+          class="ingredients__item"
       >
         <app-drag
-          :data-transfer="ingredientType"
-          :draggable="getValue(ingredientType.value) < MAX_INGREDIENT_COUNT"
+            :data-transfer="ingredientType"
+            :draggable="getValue(ingredientType.value) < MAX_INGREDIENT_COUNT"
         >
           <div class="filling">
             <img
-              :src="getImage(ingredientType.image)"
-              :alt="ingredientType.name"
+                :src="getIngredientImage(ingredientType.id)"
+                :alt="ingredientType.name"
             />
             {{ ingredientType.name }}
           </div>
         </app-drag>
 
         <app-counter
-          class="ingredients__counter"
-          :value="getValue(ingredientType.value)"
-          :min="0"
-          :max="MAX_INGREDIENT_COUNT"
-          @input="inputValue(ingredientType.value, $event)"
-          @increment="incrementValue(ingredientType.value)"
+            class="ingredients__counter"
+            :value="getValue(ingredientType.value)"
+            :min="0"
+            :max="MAX_INGREDIENT_COUNT"
+            @input="inputValue(ingredientType.value, $event)"
+            @increment="incrementValue(ingredientType.value)"
         />
       </li>
     </ul>
@@ -35,10 +35,48 @@
 </template>
 
 <script setup>
-import { toRef } from "vue";
+import {toRef} from "vue";
 import AppDrag from "@/common/components/AppDrag.vue";
-import { MAX_INGREDIENT_COUNT } from "@/common/constants";
+import {MAX_INGREDIENT_COUNT} from "@/common/constants";
 import AppCounter from "@/common/components/AppCounter.vue";
+
+
+import mushrooms from "@/assets/img/filling/mushrooms.svg";
+import cheddar from "@/assets/img/filling/cheddar.svg";
+import salami from "@/assets/img/filling/salami.svg";
+import ham from "@/assets/img/filling/ham.svg";
+import ananas from "@/assets/img/filling/ananas.svg";
+import bacon from "@/assets/img/filling/bacon.svg";
+import onion from "@/assets/img/filling/onion.svg";
+import chile from "@/assets/img/filling/chile.svg";
+import jalapeno from "@/assets/img/filling/jalapeno.svg";
+import olives from "@/assets/img/filling/olives.svg";
+import tomatoes from "@/assets/img/filling/tomatoes.svg";
+import salmon from "@/assets/img/filling/salmon.svg";
+import mozzarella from "@/assets/img/filling/mozzarella.svg";
+import parmesan from "@/assets/img/filling/parmesan.svg";
+import blueCheese from "@/assets/img/filling/blue_cheese.svg";
+
+
+const ingredientImageById = {
+  1: mushrooms,
+  2: cheddar,
+  3: salami,
+  4: ham,
+  5: ananas,
+  6: bacon,
+  7: onion,
+  8: chile,
+  9: jalapeno,
+  10: olives,
+  11: tomatoes,
+  12: salmon,
+  13: mozzarella,
+  14: parmesan,
+  15: blueCheese,
+};
+
+const getIngredientImage = (id) => ingredientImageById[id] || "";
 
 const props = defineProps({
   values: {
