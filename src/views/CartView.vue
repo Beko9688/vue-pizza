@@ -168,7 +168,12 @@
       </div>
 
       <div class="footer__submit">
-        <button type="submit" class="button" :disabled="cartStore.total === 0">
+        <button
+            class="button"
+            type="button"
+            :disabled="cartStore.total === 0 || !cartStore.phone"
+            @click="submitOrder"
+        >
           Оформить заказ
         </button>
       </div>
@@ -247,6 +252,27 @@ const submit = async () => {
 const getImage = (image) => {
   return new URL(`../assets/img/${image}`, import.meta.url).href;
 };
+
+const submitOrder = () => {
+  try {
+    if (!cartStore.phone) {
+      alert("Укажите телефон!");
+      return;
+    }
+
+    if (!cartStore.pizzas.length) {
+      alert("Корзина пуста!");
+      return;
+    }
+
+    cartStore.$reset();
+
+    router.push({ name: "success" });
+  } catch (e) {
+    console.error("submitOrder error:", e);
+  }
+};
+
 </script>
 
 <style lang="scss">
