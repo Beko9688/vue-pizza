@@ -188,6 +188,7 @@ import {usePizzaStore} from "@/stores/pizza";
 import {useRouter} from "vue-router";
 import {computed, ref} from "vue";
 import {useProfileStore} from "@/stores/profile";
+import { useOrdersStore } from "@/stores/orders";
 
 const cartStore = useCartStore();
 const pizzaStore = usePizzaStore();
@@ -253,6 +254,8 @@ const getImage = (image) => {
   return new URL(`../assets/img/${image}`, import.meta.url).href;
 };
 
+const ordersStore = useOrdersStore();
+
 const submitOrder = () => {
   try {
     if (!cartStore.phone) {
@@ -265,9 +268,20 @@ const submitOrder = () => {
       return;
     }
 
+    const order = {
+      id: Date.now(),
+      pizzas: cartStore.pizzas,
+      misc: cartStore.misc,
+      total: cartStore.total,
+      phone: cartStore.phone,
+      address: cartStore.address,
+    };
+
+    ordersStore.addOrder(order);
+
     cartStore.$reset();
 
-    router.push({ name: "success" });
+    router.push({name: "success"});
   } catch (e) {
     console.error("submitOrder error:", e);
   }
