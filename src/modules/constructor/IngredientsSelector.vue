@@ -10,7 +10,7 @@
       >
         <app-drag
             :data-transfer="ingredientType"
-            :draggable="getValue(ingredientType.value) < MAX_INGREDIENT_COUNT"
+            :draggable="getValue(ingredientType.id) < MAX_INGREDIENT_COUNT"
         >
           <div class="filling">
             <img
@@ -23,11 +23,11 @@
 
         <app-counter
             class="ingredients__counter"
-            :value="getValue(ingredientType.value)"
+            :value="getValue(ingredientType.id)"
             :min="0"
             :max="MAX_INGREDIENT_COUNT"
-            @input="inputValue(ingredientType.value, $event)"
-            @increment="incrementValue(ingredientType.value)"
+            @input="inputValue(ingredientType.id, $event)"
+            @increment="incrementValue(ingredientType.id)"
         />
       </li>
     </ul>

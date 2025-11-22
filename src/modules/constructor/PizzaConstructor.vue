@@ -28,11 +28,11 @@ const THREE_INGREDIENTS = 3;
 
 const props = defineProps({
   dough: {
-    type: String,
+    type: [Number, String],
     default: "light",
   },
   sauce: {
-    type: String,
+    type: [Number, String],
     default: "tomato",
   },
   ingredients: {
