@@ -1,7 +1,9 @@
 <template>
-  <div class="popup">
-    <slot />
-  </div>
+  <transition name="fade" appear>
+    <div class="popup">
+      <slot/>
+    </div>
+  </transition>
 </template>
 
 <style lang="scss" scoped>
@@ -56,5 +58,15 @@
 
     text-align: center;
   }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.4s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

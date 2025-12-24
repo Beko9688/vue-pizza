@@ -2,25 +2,25 @@
   <div class="content__constructor">
     <app-drop @drop="emit('drop', $event.value)">
       <div class="pizza" :class="`pizza--foundation--${dough}-${sauce}`">
-        <div class="pizza__wrapper">
+        <transition-group name="scale" tag="div" class="pizza__wrapper">
           <div
-            v-for="(value, key) in pizzaIngredients"
-            :key="key"
-            class="pizza__filling"
-            :class="[
-              `pizza__filling--${key}`,
-              value === TWO_INGREDIENTS && 'pizza__filling--second',
-              value === THREE_INGREDIENTS && 'pizza__filling--third',
-            ]"
+              v-for="(value, key) in pizzaIngredients"
+              :key="key"
+              class="pizza__filling"
+              :class="[
+      `pizza__filling--${key}`,
+      value === TWO_INGREDIENTS && 'pizza__filling--second',
+      value === THREE_INGREDIENTS && 'pizza__filling--third',
+    ]"
           />
-        </div>
+        </transition-group>
       </div>
     </app-drop>
   </div>
 </template>
 
 <script setup>
-import { computed } from "vue";
+import {computed} from "vue";
 import AppDrop from "@/common/components/AppDrop.vue";
 
 const TWO_INGREDIENTS = 2;
@@ -66,11 +66,13 @@ const pizzaIngredients = computed(() => {
 }
 
 .pizza__wrapper {
+  position: relative;
   width: 100%;
   padding-bottom: 100%;
 }
 
 .pizza__filling {
+  transform-origin: center;
   $bl: &;
   position: absolute;
   top: 0;
@@ -241,5 +243,20 @@ const pizzaIngredients = computed(() => {
   &--foundation--light-tomato {
     background-image: url("@/assets/img/foundation/small-tomato.svg");
   }
+}
+
+.scale-enter-active,
+.scale-leave-active {
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.scale-enter-from,
+.scale-leave-to {
+  transform: scale(0.7);
+  opacity: 0;
+}
+
+.scale-move {
+  transition: transform 0.15s ease;
 }
 </style>
